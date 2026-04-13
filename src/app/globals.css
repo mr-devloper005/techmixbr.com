@@ -370,6 +370,64 @@ body[data-nav-layout="sidebar-left"] header[data-mobile-nav="true"] {
 
 @media (min-width: 1280px) {
   body[data-nav-layout="sidebar-left"] header[data-mobile-nav="true"] {
-    display: none;
+  display: none;
+  }
+}
+
+@layer components {
+  .techmix-shell {
+    background:
+      radial-gradient(circle at top left, rgba(127, 212, 154, 0.22), transparent 26%),
+      radial-gradient(circle at top right, rgba(15, 34, 55, 0.12), transparent 24%),
+      linear-gradient(180deg, #f7fbf8 0%, #f2f7f3 45%, #f7fbfa 100%);
+  }
+
+  .techmix-panel {
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid rgba(27, 74, 53, 0.12);
+    box-shadow: 0 20px 50px rgba(15, 34, 55, 0.08);
+  }
+
+  .techmix-panel-strong {
+    background: linear-gradient(160deg, rgba(127, 212, 154, 0.32), rgba(255, 255, 255, 0.95) 68%);
+    border: 1px solid rgba(27, 74, 53, 0.14);
+    box-shadow: 0 22px 60px rgba(15, 34, 55, 0.1);
+  }
+
+  .techmix-badge {
+    @apply inline-flex items-center gap-2 rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.24em];
+    background: rgba(69, 183, 107, 0.14);
+    color: #2b7244;
+    border: 1px solid rgba(69, 183, 107, 0.22);
+  }
+
+  .techmix-btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-semibold transition;
+    background: #0f2237;
+    color: #f3f7fb;
+  }
+
+  .techmix-btn:hover {
+    transform: translateY(-1px);
+    background: #17334f;
+  }
+
+  .techmix-btn-soft {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-semibold transition;
+    background: #ffffff;
+    color: #15352a;
+    border: 1px solid rgba(27, 74, 53, 0.16);
+  }
+
+  .techmix-btn-soft:hover {
+    transform: translateY(-1px);
+    background: #edf6ef;
+  }
+
+  .techmix-stat {
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(27, 74, 53, 0.12);
+    border-radius: 1.1rem;
+    padding: 0.95rem;
   }
 }

@@ -14,9 +14,9 @@ export const SITE_RECIPE: SiteRecipe = {
     profile: 'profile-business',
   },
   manualOverrides: {
-    navbar: false,
-    footer: false,
-    homePage: false,
+    navbar: true,
+    footer: true,
+    homePage: true,
     taskListPage: false,
     taskDetailPage: false,
     taskCard: false,
