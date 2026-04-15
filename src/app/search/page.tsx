@@ -1,4 +1,5 @@
-import { PageShell } from "@/components/shared/page-shell";
+import { NavbarShell } from "@/components/shared/navbar-shell";
+import { Footer } from "@/components/shared/footer";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Search } from "lucide-react";
@@ -71,46 +72,54 @@ export default async function SearchPage({
   const results = normalized.length > 0 ? filtered : filtered.slice(0, 24);
 
   return (
-    <PageShell
-      title="Search"
-      description={
-        query
-          ? `Results for "${query}"`
-          : "Browse the latest posts across every task."
-      }
-      actions={
-        <form action="/search" className="flex w-full gap-2 sm:w-auto">
-          <input type="hidden" name="master" value="1" />
-          {category ? <input type="hidden" name="category" value={category} /> : null}
-          {task ? <input type="hidden" name="task" value={task} /> : null}
-          <div className="relative w-full sm:w-80">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-            <Input
-              name="q"
-              defaultValue={query}
-              placeholder="Search across tasks..."
-              className="h-11 pl-9"
-            />
+    <div className="techmix-shell min-h-screen text-[#10231a]">
+      <NavbarShell />
+      <main className="mx-auto w-full max-w-[1450px] px-4 py-12 sm:px-6 lg:px-8">
+        <section className="techmix-panel rounded-[2rem] p-6 sm:p-8">
+          <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <h1 className="text-3xl font-semibold tracking-[-0.04em] text-[#10263c]">Search</h1>
+              <p className="mt-2 text-sm text-[#3f5a4c]">
+                {query ? `Results for "${query}"` : "Browse the latest posts across every task."}
+              </p>
+            </div>
+            <form action="/search" className="flex w-full gap-2 sm:w-auto">
+              <input type="hidden" name="master" value="1" />
+              {category ? <input type="hidden" name="category" value={category} /> : null}
+              {task ? <input type="hidden" name="task" value={task} /> : null}
+              <div className="relative w-full sm:w-80">
+                <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#3f5a4c]" />
+                <Input
+                  name="q"
+                  defaultValue={query}
+                  placeholder="Search across tasks..."
+                  className="h-11 border border-[rgba(27,74,53,0.16)] bg-white pl-9 focus-visible:ring-2 focus-visible:ring-[#45b76b]/30"
+                />
+              </div>
+              <Button type="submit" className="techmix-btn h-11">
+                Search
+              </Button>
+            </form>
           </div>
-          <Button type="submit" className="h-11">
-            Search
-          </Button>
-        </form>
-      }
-    >
-      {results.length ? (
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {results.map((post) => {
-            const task = getPostTaskKey(post);
-            const href = task ? buildPostUrl(task, post.slug) : `/posts/${post.slug}`;
-            return <TaskPostCard key={post.id} post={post} href={href} />;
-          })}
-        </div>
-      ) : (
-        <div className="rounded-2xl border border-dashed border-border p-10 text-center text-muted-foreground">
-          No matching posts yet.
-        </div>
-      )}
-    </PageShell>
+        </section>
+
+        <section className="mt-8">
+          {results.length ? (
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {results.map((post) => {
+                const task = getPostTaskKey(post);
+                const href = task ? buildPostUrl(task, post.slug) : `/posts/${post.slug}`;
+                return <TaskPostCard key={post.id} post={post} href={href} />;
+              })}
+            </div>
+          ) : (
+            <div className="rounded-2xl border border-dashed border-[rgba(27,74,53,0.22)] bg-white/70 p-10 text-center text-[#3f5a4c]">
+              No matching posts yet.
+            </div>
+          )}
+        </section>
+      </main>
+      <Footer />
+    </div>
   );
 }

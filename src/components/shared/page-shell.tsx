@@ -20,7 +20,7 @@ export function PageShell({
       <NavbarShell />
       <main>
         <section className="border-b border-border bg-secondary/30">
-          <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
+          <div className="w-full px-4 py-10 sm:px-6 lg:px-8">
             <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
               <div>
                 <h1 className="text-3xl font-bold text-foreground">{title}</h1>
@@ -32,7 +32,7 @@ export function PageShell({
             </div>
           </div>
         </section>
-        <section className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
+        <section className="w-full px-4 py-10 sm:px-6 lg:px-8">
           {children}
         </section>
       </main>

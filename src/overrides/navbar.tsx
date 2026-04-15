@@ -4,7 +4,7 @@ import { useMemo, useState } from 'react'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { BookOpen, Menu, Search, Sparkles, X } from 'lucide-react'
+import { Menu, Search, Sparkles, X } from 'lucide-react'
 import { SITE_CONFIG } from '@/lib/site-config'
 import { useAuth } from '@/lib/auth-context'
 
@@ -32,14 +32,14 @@ export function NavbarOverride() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-[#d6e8dd] bg-[rgba(248,252,249,0.88)] backdrop-blur-xl">
-      <nav className="mx-auto flex max-w-[1450px] items-center gap-3 px-4 py-3 sm:px-6 lg:px-8">
-        <Link href="/" className="flex items-center gap-3 rounded-full bg-white px-3 py-2 shadow-[0_12px_24px_rgba(18,54,39,0.08)]">
-          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#45b76b] text-white">
-            <BookOpen className="h-4 w-4" />
+      <nav className="mx-auto flex w-full max-w-[1450px] items-center gap-3 px-4 py-3 sm:px-6 lg:px-8">
+        <Link href="/" className="flex min-w-0 max-w-[min(100%,18rem)] items-center gap-3 rounded-full bg-white px-3 py-2 shadow-[0_12px_24px_rgba(18,54,39,0.08)] sm:max-w-none">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-white p-1 ring-1 ring-[rgba(27,74,53,0.1)]">
+            <img src="/favicon.png" alt={`${SITE_CONFIG.name} logo`} width={40} height={40} className="h-full w-full object-contain" />
           </div>
-          <div className="hidden sm:block">
-            <p className="text-sm font-semibold text-[#112418]">{SITE_CONFIG.name}</p>
-            <p className="text-[11px] uppercase tracking-[0.22em] text-[#3d8f57]">Tech and growth journal</p>
+          <div className="min-w-0">
+            <p className="truncate text-sm font-semibold text-[#112418]">{SITE_CONFIG.name}</p>
+            <p className="truncate text-[11px] uppercase tracking-[0.22em] text-[#3d8f57]">Tech and growth journal</p>
           </div>
         </Link>
 
