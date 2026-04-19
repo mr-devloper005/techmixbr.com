@@ -1,10 +1,10 @@
 export const siteIdentity = {
-  code: process.env.NEXT_PUBLIC_SITE_CODE || 'techmixbr',
+  code: process.env.NEXT_PUBLIC_SITE_CODE || 'tb9v4q2m7x',
   name: process.env.NEXT_PUBLIC_SITE_NAME || 'Techmix BR',
-  tagline: process.env.NEXT_PUBLIC_SITE_TAGLINE || 'Business listing platform',
+  tagline: process.env.NEXT_PUBLIC_SITE_TAGLINE || 'Technology and growth journal',
   description:
     process.env.NEXT_PUBLIC_SITE_DESCRIPTION ||
-    'A listing-first business discovery platform for browsing services, businesses, spaces, and location-based opportunities through a cleaner browsing experience.',
+    'An article-first technology publication focused on AI tools, digital growth, and practical business insights.',
   domain: process.env.NEXT_PUBLIC_SITE_DOMAIN || 'techmixbr.com',
   url: process.env.NEXT_PUBLIC_SITE_URL || 'https://techmixbr.com',
   ogImage: process.env.NEXT_PUBLIC_SITE_OG_IMAGE || '/og-default.png',
@@ -16,4 +16,3 @@ export const defaultAuthorProfile = {
   name: siteIdentity.name,
   avatar: '/placeholder.svg?height=80&width=80',
 } as const
-

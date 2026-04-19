@@ -154,7 +154,7 @@ function DirectoryHome({ primaryTask, enabledTasks, listingPosts, classifiedPost
   return (
     <main>
       <section className={tone.hero}>
-        <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8 lg:py-18">
+        <div className="w-full px-4 py-14 sm:px-6 lg:px-8 lg:py-18">
           <div className="grid gap-8 lg:grid-cols-[1.08fr_0.92fr] lg:items-center">
             <div>
               <span className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.24em] ${tone.badge}`}>
@@ -218,7 +218,7 @@ function DirectoryHome({ primaryTask, enabledTasks, listingPosts, classifiedPost
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+      <section className="w-full px-4 py-14 sm:px-6 lg:px-8">
         <div className="flex items-end justify-between gap-4 border-b border-border pb-6">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.24em] text-muted-foreground">Featured businesses</p>
@@ -234,7 +234,7 @@ function DirectoryHome({ primaryTask, enabledTasks, listingPosts, classifiedPost
       </section>
 
       <section className={`${tone.shell}`}>
-        <div className="mx-auto grid max-w-7xl gap-8 px-4 py-14 sm:px-6 lg:grid-cols-[0.92fr_1.08fr] lg:px-8">
+        <div className="grid w-full gap-8 px-4 py-14 sm:px-6 lg:grid-cols-[0.92fr_1.08fr] lg:px-8">
           <div className={`rounded-[2rem] p-7 ${tone.panel}`}>
             <p className="text-xs font-semibold uppercase tracking-[0.24em] opacity-70">What makes this different</p>
             <h2 className="mt-3 text-3xl font-semibold tracking-[-0.04em]">Built like a business directory, not a recolored content site.</h2>
@@ -275,7 +275,7 @@ function EditorialHome({ primaryTask, articlePosts, supportTasks }: { primaryTas
 
   return (
     <main className={tone.shell}>
-      <section className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8 lg:py-18">
+      <section className="w-full px-4 py-14 sm:px-6 lg:px-8 lg:py-18">
         <div className="grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-start">
           <div>
             <span className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.24em] ${tone.badge}`}>
@@ -350,7 +350,7 @@ function VisualHome({ primaryTask, imagePosts, profilePosts, articlePosts }: { p
 
   return (
     <main className={tone.shell}>
-      <section className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8 lg:py-18">
+      <section className="w-full px-4 py-14 sm:px-6 lg:px-8 lg:py-18">
         <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
           <div>
             <span className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.24em] ${tone.badge}`}>
@@ -416,7 +416,7 @@ function CurationHome({ primaryTask, bookmarkPosts, profilePosts, articlePosts }
 
   return (
     <main className={tone.shell}>
-      <section className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8 lg:py-18">
+      <section className="w-full px-4 py-14 sm:px-6 lg:px-8 lg:py-18">
         <div className="grid gap-8 lg:grid-cols-[1fr_1fr] lg:items-start">
           <div>
             <span className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.24em] ${tone.badge}`}>

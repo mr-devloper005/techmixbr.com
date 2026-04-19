@@ -57,38 +57,21 @@ export async function TaskListPage({ task, category }: { task: TaskKey; category
   }))
   const { recipe } = getFactoryState()
   const layoutKey = recipe.taskLayouts[task as keyof typeof recipe.taskLayouts] || `${task}-${task === 'listing' ? 'directory' : 'editorial'}`
-  const shellClass = variantShells[layoutKey as keyof typeof variantShells] || 'bg-background'
+  const shellClass = 'techmix-shell text-[#10231a]'
   const Icon = taskIcons[task] || LayoutGrid
 
-  const isDark = ['image-masonry', 'image-portfolio', 'profile-creator'].includes(layoutKey)
-  const ui = isDark
-    ? {
-        muted: 'text-slate-300',
-        panel: 'border border-white/10 bg-white/6',
-        soft: 'border border-white/10 bg-white/5',
-        input: 'border-white/10 bg-white/6 text-white',
-        button: 'bg-white text-slate-950 hover:bg-slate-200',
-      }
-    : layoutKey.startsWith('article') || layoutKey.startsWith('sbm')
-      ? {
-          muted: 'text-[#72594a]',
-          panel: 'border border-[#dbc6b6] bg-white/90',
-          soft: 'border border-[#dbc6b6] bg-[#fff8ef]',
-          input: 'border border-[#dbc6b6] bg-white text-[#2f1d16]',
-          button: 'bg-[#2f1d16] text-[#fff4e4] hover:bg-[#452920]',
-        }
-      : {
-          muted: 'text-slate-600',
-          panel: 'border border-slate-200 bg-white',
-          soft: 'border border-slate-200 bg-slate-50',
-          input: 'border border-slate-200 bg-white text-slate-950',
-          button: 'bg-slate-950 text-white hover:bg-slate-800',
-        }
+  const ui = {
+    muted: 'text-[#3f5a4c]',
+    panel: 'techmix-panel',
+    soft: 'border border-[rgba(27,74,53,0.12)] bg-white/88',
+    input: 'border border-[rgba(27,74,53,0.16)] bg-white text-[#10231a]',
+    button: 'bg-[#0f2237] text-[#f3f7fb] hover:bg-[#17334f]',
+  }
 
   return (
     <div className={`min-h-screen ${shellClass}`}>
       <NavbarShell />
-      <main className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+      <main className="mx-auto w-full max-w-[1450px] px-4 py-12 sm:px-6 lg:px-8">
         {task === 'listing' ? (
           <SchemaJsonLd
             data={[
