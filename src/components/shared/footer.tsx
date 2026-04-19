@@ -63,7 +63,7 @@ export function Footer() {
   if (recipe.footer === 'minimal-footer') {
     return (
       <footer className="border-t border-[#d7deca] bg-[#f4f6ef] text-[#1f2617]">
-        <div className="mx-auto flex max-w-7xl flex-col gap-5 px-4 py-8 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8">
+        <div className="flex w-full flex-col gap-5 px-4 py-8 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8">
           <div>
             <p className="text-lg font-semibold">{SITE_CONFIG.name}</p>
             <p className="mt-1 text-sm text-[#56604b]">{SITE_CONFIG.description}</p>
@@ -83,7 +83,7 @@ export function Footer() {
   if (recipe.footer === 'dense-footer') {
     return (
       <footer className="border-t border-white/10 bg-[linear-gradient(180deg,#07111f_0%,#0b1a2e_100%)] text-white">
-        <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+        <div className="w-full px-4 py-14 sm:px-6 lg:px-8">
           <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr_1fr]">
             <div className="rounded-[2rem] border border-white/10 bg-white/5 p-7">
               <div className="flex items-center gap-3">
@@ -141,7 +141,7 @@ export function Footer() {
   if (recipe.footer === 'editorial-footer') {
     return (
       <footer className="border-t border-[#dbc6b6] bg-[linear-gradient(180deg,#fff9f0_0%,#fff1df_100%)] text-[#2f1d16]">
-        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+        <div className="w-full px-4 py-12 sm:px-6 lg:px-8">
           <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr_0.9fr]">
             <div>
               <div className="inline-flex items-center gap-2 rounded-full border border-[#dbc6b6] bg-white px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.22em] text-[#72594a]">
@@ -175,7 +175,7 @@ export function Footer() {
 
   return (
     <footer className="border-t border-slate-200 bg-[linear-gradient(180deg,#ffffff_0%,#f8fafc_100%)] text-slate-950">
-      <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+      <div className="w-full px-4 py-14 sm:px-6 lg:px-8">
         <div className="grid gap-10 md:grid-cols-[1.2fr_0.8fr_0.8fr_0.8fr_0.8fr]">
           <div>
             <Link href="/" className="flex items-center gap-3">

@@ -24,7 +24,7 @@ export async function HomePageOverride() {
   return (
     <div className="techmix-shell min-h-screen text-[#10231a]">
       <NavbarShell />
-      <main className="mx-auto max-w-[1450px] px-4 pb-14 pt-7 sm:px-6 lg:px-8">
+      <main className="mx-auto w-full max-w-[1450px] px-4 pb-14 pt-7 sm:px-6 lg:px-8">
         <SchemaJsonLd
           data={{
             '@context': 'https://schema.org',

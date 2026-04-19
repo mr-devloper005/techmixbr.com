@@ -5,6 +5,7 @@ import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, Plus, Save } from "lucide-react";
 import { NavbarShell } from "@/components/shared/navbar-shell";
+import { Footer } from "@/components/shared/footer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -182,17 +183,18 @@ export default function CreateTaskPage() {
 
   if (!taskConfig || !formConfig) {
     return (
-      <div className="min-h-screen bg-background">
+      <div className="techmix-shell min-h-screen text-[#10231a]">
         <NavbarShell />
-        <main className="mx-auto max-w-3xl px-4 py-16 text-center">
+        <main className="mx-auto w-full max-w-[1450px] px-4 py-16 text-center sm:px-6 lg:px-8">
           <h1 className="text-2xl font-semibold text-foreground">Task not available</h1>
-          <p className="mt-2 text-muted-foreground">
+          <p className="mt-2 text-[#3f5a4c]">
             This task is not enabled for the current site.
           </p>
-          <Button className="mt-6" asChild>
+          <Button className="techmix-btn mt-6" asChild>
             <Link href="/">Back home</Link>
           </Button>
         </main>
+        <Footer />
       </div>
     );
   }
@@ -271,25 +273,25 @@ export default function CreateTaskPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="techmix-shell min-h-screen text-[#10231a]">
       <NavbarShell />
-      <main className="mx-auto max-w-4xl px-4 py-12">
+      <main className="mx-auto w-full max-w-[1450px] px-4 py-12 sm:px-6 lg:px-8">
         <div className="mb-8 flex items-center gap-3">
-          <Button variant="ghost" size="icon" asChild>
+          <Button variant="ghost" size="icon" className="rounded-full bg-white/80 hover:bg-white" asChild>
             <Link href="/">
               <ArrowLeft className="h-5 w-5" />
             </Link>
           </Button>
           <div>
-            <h1 className="text-2xl font-semibold text-foreground">{formConfig.title}</h1>
-            <p className="text-sm text-muted-foreground">{formConfig.description}</p>
+            <h1 className="text-3xl font-semibold tracking-[-0.04em] text-[#10263c]">{formConfig.title}</h1>
+            <p className="text-sm text-[#3f5a4c]">{formConfig.description}</p>
           </div>
         </div>
 
-        <div className="rounded-3xl border border-border bg-card p-8 shadow-sm">
+        <div className="techmix-panel rounded-3xl p-8">
           <div className="flex flex-wrap gap-2">
-            <Badge variant="secondary">{taskConfig.label}</Badge>
-            <Badge variant="outline">Local-only</Badge>
+            <Badge className="bg-[#0f2237] text-[#f3f7fb]">{taskConfig.label}</Badge>
+            <Badge variant="outline" className="border-[rgba(27,74,53,0.2)] text-[#2b7244]">Local-only</Badge>
           </div>
 
           <div className="mt-6 grid gap-6">
@@ -304,13 +306,13 @@ export default function CreateTaskPage() {
                     placeholder={field.placeholder}
                     value={values[field.key] || ""}
                     onChange={(event) => updateValue(field.key, event.target.value)}
-                    className="border-2 border-slate-200 bg-white focus-visible:ring-2 focus-visible:ring-primary/30"
+                    className="border border-[rgba(27,74,53,0.16)] bg-white focus-visible:ring-2 focus-visible:ring-[#45b76b]/30"
                   />
                 ) : field.type === "category" ? (
                   <select
                     value={values[field.key] || ""}
                     onChange={(event) => updateValue(field.key, event.target.value)}
-                    className="h-11 rounded-lg border-2 border-slate-200 bg-white px-3 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30"
+                    className="h-11 rounded-lg border border-[rgba(27,74,53,0.16)] bg-white px-3 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#45b76b]/30"
                   >
                     <option value="">Select category</option>
                     {CATEGORY_OPTIONS.map((option) => (
@@ -353,6 +355,7 @@ export default function CreateTaskPage() {
                       placeholder="Or paste a PDF URL"
                       value={values[field.key] || ""}
                       onChange={(event) => updateValue(field.key, event.target.value)}
+                      className="h-11 border border-[rgba(27,74,53,0.16)] bg-white focus-visible:ring-2 focus-visible:ring-[#45b76b]/30"
                     />
                     {uploadingPdf ? (
                       <p className="text-xs text-muted-foreground">Uploading PDF…</p>
@@ -368,7 +371,7 @@ export default function CreateTaskPage() {
                     }
                     value={values[field.key] || ""}
                     onChange={(event) => updateValue(field.key, event.target.value)}
-                    className="h-11 border-2 border-slate-200 bg-white focus-visible:ring-2 focus-visible:ring-primary/30"
+                    className="h-11 border border-[rgba(27,74,53,0.16)] bg-white focus-visible:ring-2 focus-visible:ring-[#45b76b]/30"
                   />
                 )}
               </div>
@@ -376,11 +379,11 @@ export default function CreateTaskPage() {
           </div>
 
           <div className="mt-8 flex flex-wrap gap-3">
-            <Button onClick={handleSubmit}>
+            <Button onClick={handleSubmit} className="techmix-btn">
               <Save className="mr-2 h-4 w-4" />
               Save locally
             </Button>
-            <Button variant="ghost" asChild>
+            <Button variant="ghost" className="techmix-btn-soft" asChild>
               <Link href={taskConfig.route}>
                 View {taskConfig.label}
                 <Plus className="ml-2 h-4 w-4" />
@@ -389,6 +392,7 @@ export default function CreateTaskPage() {
           </div>
         </div>
       </main>
+      <Footer />
     </div>
   );
 }

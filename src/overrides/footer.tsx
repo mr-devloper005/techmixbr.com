@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { BookOpen, Sparkles } from 'lucide-react'
+import { BookOpen } from 'lucide-react'
 import { SITE_CONFIG } from '@/lib/site-config'
 
 export const FOOTER_OVERRIDE_ENABLED = true
@@ -7,10 +7,10 @@ export const FOOTER_OVERRIDE_ENABLED = true
 export function FooterOverride() {
   return (
     <footer className="border-t border-[#d6e8dd] bg-[#0f1e31] text-[#dbe7f0]">
-      <div className="mx-auto grid max-w-[1450px] gap-8 px-4 py-10 sm:px-6 lg:grid-cols-[1.05fr_0.95fr_0.95fr] lg:px-8">
+      <div className="mx-auto grid w-full max-w-[1450px] gap-8 px-4 py-10 sm:px-6 lg:grid-cols-[1.05fr_0.95fr_0.95fr] lg:px-8">
         <div>
           <div className="inline-flex items-center gap-2 rounded-full bg-[#17334f] px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.2em] text-[#7fd49a]">
-            <Sparkles className="h-3.5 w-3.5" />
+            <img src="/favicon.png" alt={`${SITE_CONFIG.name} logo`} width={18} height={18} className="h-[18px] w-[18px] shrink-0 object-contain" />
             {SITE_CONFIG.name}
           </div>
           <h2 className="mt-4 text-3xl font-semibold tracking-[-0.05em] text-white">Technology, marketing, and software content that stays actionable.</h2>

@@ -113,7 +113,7 @@ export function Navbar() {
     return (
       <>
         <header className={cn('sticky top-0 z-50 w-full xl:hidden', palette.shell)}>
-          <nav className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-3 px-4 sm:px-6 lg:px-8">
+          <nav className="flex h-20 w-full items-center justify-between gap-3 px-4 sm:px-6 lg:px-8">
             <div className="flex min-w-0 items-center gap-3">
               <Link href="/" className="flex min-w-0 items-center gap-3">
                 <div className={cn('flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden p-1.5', palette.logo)}>
@@ -252,7 +252,7 @@ export function Navbar() {
   return (
     <>
       <header data-mobile-nav="true" className={cn('sticky top-0 z-50 w-full xl:hidden', style.shell)}>
-        <nav className={cn('mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 sm:px-6 lg:px-8', isFloating ? 'h-24 pt-4' : 'h-20')}>
+        <nav className={cn('flex w-full items-center justify-between gap-3 px-4 sm:px-6 lg:px-8', isFloating ? 'h-24 pt-4' : 'h-20')}>
           <div className="flex min-w-0 items-center gap-3">
             <Link href="/" className="flex min-w-0 items-center gap-3">
               <div className={cn('flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden p-1.5', style.logo)}>
