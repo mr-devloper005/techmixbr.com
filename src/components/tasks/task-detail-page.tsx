@@ -1,7 +1,7 @@
 import { ContentImage } from "@/components/shared/content-image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { MapPin, Globe, Phone, Tag, Mail } from "lucide-react";
+import { MapPin, Globe, Phone, Tag, Mail, Clock } from "lucide-react";
 import { NavbarShell } from "@/components/shared/navbar-shell";
 import { Footer } from "@/components/shared/footer";
 import { TaskPostCard } from "@/components/shared/task-post-card";
@@ -13,6 +13,7 @@ import type { SitePost } from "@/lib/site-connector";
 import { TaskImageCarousel } from "@/components/tasks/task-image-carousel";
 import { cn } from "@/lib/utils";
 import { ArticleComments } from "@/components/tasks/article-comments";
+import { ArticleShareButtons } from "@/components/tasks/article-share-buttons";
 import { SchemaJsonLd } from "@/components/seo/schema-jsonld";
 import { RichContent, formatRichHtml } from "@/components/shared/rich-content";
 import { getFactoryState } from "@/design/factory/get-factory-state";
@@ -86,6 +87,66 @@ const toNumber = (value?: number | string) => {
   return null;
 };
 
+const calculateReadingTime = (html: string): number => {
+  const text = html.replace(/<[^>]*>/g, '');
+  const words = text.split(/\s+/).filter(word => word.length > 0).length;
+  const wordsPerMinute = 200;
+  return Math.ceil(words / wordsPerMinute);
+};
+
+const extractHeadings = (html: string): { id: string; text: string; level: number }[] => {
+  const headingRegex = /<h([2-6])[^>]*>(.*?)<\/h[2-6]>/gi;
+  const headings: { id: string; text: string; level: number }[] = [];
+  let match;
+  
+  while ((match = headingRegex.exec(html)) !== null) {
+    const level = parseInt(match[1]);
+    const text = match[2].replace(/<[^>]*>/g, '').trim();
+    const id = text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    headings.push({ id, text, level });
+  }
+  
+  return headings;
+};
+
+const addIdsToHeadings = (html: string): string => {
+  return html.replace(/<h([2-6])([^>]*)>(.*?)<\/h[2-6]>/gi, (match, level, attrs, text) => {
+    const cleanText = text.replace(/<[^>]*>/g, '').trim();
+    const id = cleanText.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    return `<h${level}${attrs} id="${id}">${text}</h${level}>`;
+  });
+};
+
+function TableOfContents({ headings }: { headings: { id: string; text: string; level: number }[] }) {
+  if (headings.length === 0) return null;
+
+  return (
+    <div className="techmix-panel sticky top-24 rounded-2xl p-6">
+      <h3 className="text-lg font-semibold text-foreground">CONTENTS</h3>
+      <nav className="mt-4">
+        <ul className="space-y-2 text-sm">
+          {headings.map((heading) => (
+            <li key={heading.id}>
+              <a
+                href={`#${heading.id}`}
+                className={cn(
+                  "block text-muted-foreground hover:text-foreground transition-colors",
+                  heading.level === 3 && "pl-4",
+                  heading.level === 4 && "pl-8",
+                  heading.level === 5 && "pl-12",
+                  heading.level === 6 && "pl-16"
+                )}
+              >
+                {heading.text}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </div>
+  );
+}
+
 const buildMapEmbedUrl = (
   latitude?: number | string,
   longitude?: number | string,
@@ -146,7 +207,10 @@ export async function TaskDetailPage({ task, slug }: { task: TaskKey; slug: stri
   const category = content.category || post.tags?.[0] || taskConfig?.label || task;
   const description = content.description || post.summary || "Details coming soon.";
   const descriptionHtml = !isArticle ? formatRichHtml(description, "Details coming soon.") : "";
-  const articleHtml = isArticle ? formatArticleHtml(content, post) : "";
+  const rawArticleHtml = isArticle ? formatArticleHtml(content, post) : "";
+  const articleHtml = isArticle ? addIdsToHeadings(rawArticleHtml) : "";
+  const readingTime = isArticle ? calculateReadingTime(rawArticleHtml) : 0;
+  const tocHeadings = isArticle ? extractHeadings(rawArticleHtml) : [];
   const articleSummary =
     post.summary ||
     (typeof content.excerpt === "string" ? content.excerpt : "") ||
@@ -167,7 +231,8 @@ export async function TaskDetailPage({ task, slug }: { task: TaskKey; slug: stri
   const images = getImageUrls(post, content);
   const mapEmbedUrl = buildMapEmbedUrl(content.latitude, content.longitude, location);
   const isBookmark = task === "sbm" || task === "social";
-  const hideSidebar = isClassified || isArticle || task === "image" || isBookmark;
+  const hideSidebar = isClassified || task === "image" || isBookmark;
+  const showArticleSidebar = isArticle && tocHeadings.length > 0;
   const related = (await fetchTaskPosts(task, 6))
     .filter((item) => item.slug !== post.slug)
     .filter((item) => {
@@ -262,35 +327,33 @@ export async function TaskDetailPage({ task, slug }: { task: TaskKey; slug: stri
         <div
           className={cn(
             "grid gap-10",
-            hideSidebar ? "lg:grid-cols-1" : "lg:grid-cols-[2fr_1fr]"
+            hideSidebar && !showArticleSidebar ? "lg:grid-cols-1" : "lg:grid-cols-[2fr_1fr]"
           )}
         >
           <div className={cn(isClassified ? "space-y-8" : "")}>
             {isArticle ? (
-              <div className="mx-auto w-full max-w-4xl space-y-6">
-                <h1 className="text-4xl font-semibold leading-tight text-foreground">
-                  {post.title}
-                </h1>
-                <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted-foreground">
-                  <span>By {articleAuthor}</span>
-                  {articleDate ? <span>{articleDate}</span> : null}
-                  <Badge variant="secondary" className="inline-flex items-center gap-1">
-                    <Tag className="h-3.5 w-3.5" />
-                    {category}
-                  </Badge>
-                </div>
-                {postTags.length ? (
-                  <div className="flex flex-wrap gap-2">
-                    {postTags.map((tag) => (
-                      <Badge key={tag} variant="outline">
-                        {tag}
+              <div className="mx-auto w-full max-w-4xl space-y-8">
+                <div className="space-y-6">
+                  <h1 className="text-4xl font-bold leading-tight text-foreground sm:text-5xl">
+                    {post.title}
+                  </h1>
+                  <div className="flex flex-wrap items-center justify-between gap-4 border-y border-border py-4">
+                    <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted-foreground">
+                      <span className="font-medium text-foreground">By {articleAuthor}</span>
+                      {readingTime > 0 && (
+                        <span className="flex items-center gap-1">
+                          <Clock className="h-3.5 w-3.5" />
+                          {readingTime} min read
+                        </span>
+                      )}
+                      <Badge variant="secondary" className="inline-flex items-center gap-1">
+                        <Tag className="h-3.5 w-3.5" />
+                        {category}
                       </Badge>
-                    ))}
+                    </div>
+                    <ArticleShareButtons url={articleUrl} title={post.title} />
                   </div>
-                ) : null}
-                {articleSummary ? (
-                  <p className="text-base leading-7 text-muted-foreground">{articleSummary}</p>
-                ) : null}
+                </div>
                 {images[0] ? (
                   <div className="relative aspect-[16/9] w-full overflow-hidden rounded-3xl border border-border bg-muted">
                     <ContentImage
@@ -303,7 +366,21 @@ export async function TaskDetailPage({ task, slug }: { task: TaskKey; slug: stri
                     />
                   </div>
                 ) : null}
-                <RichContent html={articleHtml} className="leading-8 prose-p:my-6 prose-h2:my-8 prose-h3:my-6 prose-ul:my-6" />
+                {postTags.length ? (
+                  <div className="flex flex-wrap gap-2">
+                    {postTags.map((tag) => (
+                      <Badge key={tag} variant="outline">
+                        {tag}
+                      </Badge>
+                    ))}
+                  </div>
+                ) : null}
+                <div className="prose prose-lg max-w-none">
+                  <RichContent 
+                    html={articleHtml} 
+                    className="leading-8 prose-p:my-6 prose-h2:my-8 prose-h3:my-6 prose-ul:my-6 [&_p:first-child::first-letter]:float-left [&_p:first-child::first-letter]:text-6xl [&_p:first-child::first-letter]:font-bold [&_p:first-child::first-letter]:leading-none [&_p:first-child::first-letter]:mr-2 [&_p:first-child::first-letter]:mt-1 [&_p:first-child::first-letter]:text-foreground" 
+                  />
+                </div>
                 <ArticleComments slug={post.slug} />
               </div>
             ) : null}
@@ -406,70 +483,76 @@ export async function TaskDetailPage({ task, slug }: { task: TaskKey; slug: stri
 
           </div>
 
-          {!hideSidebar ? (
+          {!hideSidebar || showArticleSidebar ? (
             <aside className="space-y-6">
-            <div className="techmix-panel rounded-2xl p-6">
-              <h2 className="text-lg font-semibold text-foreground">Listing details</h2>
-                <div className="mt-4 space-y-3 text-sm text-muted-foreground">
-                  {content.website && (
-                    <div className="flex items-start gap-2">
-                      <Globe className="mt-0.5 h-4 w-4" />
-                      <a
-                        href={content.website}
-                        className="break-all text-foreground hover:underline"
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        {content.website}
+            {isArticle ? (
+              <TableOfContents headings={tocHeadings} />
+            ) : (
+              <>
+                <div className="techmix-panel rounded-2xl p-6">
+                  <h2 className="text-lg font-semibold text-foreground">Listing details</h2>
+                    <div className="mt-4 space-y-3 text-sm text-muted-foreground">
+                      {content.website && (
+                        <div className="flex items-start gap-2">
+                          <Globe className="mt-0.5 h-4 w-4" />
+                          <a
+                            href={content.website}
+                            className="break-all text-foreground hover:underline"
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            {content.website}
+                          </a>
+                        </div>
+                      )}
+                      {content.phone && (
+                        <div className="flex items-start gap-2">
+                          <Phone className="mt-0.5 h-4 w-4" />
+                          <span>{content.phone}</span>
+                        </div>
+                      )}
+                      {content.email && (
+                        <div className="flex items-start gap-2">
+                          <Mail className="mt-0.5 h-4 w-4" />
+                          <a
+                            href={`mailto:${content.email}`}
+                            className="break-all text-foreground hover:underline"
+                          >
+                            {content.email}
+                          </a>
+                        </div>
+                      )}
+                      {location && (
+                        <div className="flex items-start gap-2">
+                          <MapPin className="mt-0.5 h-4 w-4" />
+                          <span>{location}</span>
+                        </div>
+                      )}
+                    </div>
+                  {content.website ? (
+                    <Button className="mt-5 w-full" asChild>
+                      <a href={content.website} target="_blank" rel="noreferrer">
+                        Visit Website
                       </a>
-                    </div>
-                  )}
-                  {content.phone && (
-                    <div className="flex items-start gap-2">
-                      <Phone className="mt-0.5 h-4 w-4" />
-                      <span>{content.phone}</span>
-                    </div>
-                  )}
-                  {content.email && (
-                    <div className="flex items-start gap-2">
-                      <Mail className="mt-0.5 h-4 w-4" />
-                      <a
-                        href={`mailto:${content.email}`}
-                        className="break-all text-foreground hover:underline"
-                      >
-                        {content.email}
-                      </a>
-                    </div>
-                  )}
-                  {location && (
-                    <div className="flex items-start gap-2">
-                      <MapPin className="mt-0.5 h-4 w-4" />
-                      <span>{location}</span>
-                    </div>
-                  )}
+                    </Button>
+                  ) : null}
                 </div>
-              {content.website ? (
-                <Button className="mt-5 w-full" asChild>
-                  <a href={content.website} target="_blank" rel="noreferrer">
-                    Visit Website
-                  </a>
-                </Button>
-              ) : null}
-            </div>
 
-            {mapEmbedUrl ? (
-              <div className="techmix-panel rounded-2xl p-4">
-                <p className="text-sm font-semibold text-foreground">Location map</p>
-                <div className="mt-4 overflow-hidden rounded-xl border border-border">
-                  <iframe
-                    title="Business location map"
-                    src={mapEmbedUrl}
-                    className="h-56 w-full"
-                    loading="lazy"
-                  />
-                </div>
-              </div>
-            ) : null}
+                {mapEmbedUrl ? (
+                  <div className="techmix-panel rounded-2xl p-4">
+                    <p className="text-sm font-semibold text-foreground">Location map</p>
+                    <div className="mt-4 overflow-hidden rounded-xl border border-border">
+                      <iframe
+                        title="Business location map"
+                        src={mapEmbedUrl}
+                        className="h-56 w-full"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                ) : null}
+              </>
+            )}
 
           </aside>
           ) : null}

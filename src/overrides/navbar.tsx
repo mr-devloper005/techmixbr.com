@@ -23,9 +23,6 @@ export function NavbarOverride() {
   const primaryLinks = useMemo(
     () => [
       { label: 'Articles', href: '/articles' },
-      { label: 'Guides', href: '/blog' },
-      { label: 'News', href: '/community' },
-      { label: 'Insights', href: '/developers' },
     ],
     [],
   )

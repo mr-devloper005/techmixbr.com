@@ -10,16 +10,14 @@ import { fetchTaskPosts } from '@/lib/task-data'
 export const HOME_PAGE_OVERRIDE_ENABLED = true
 
 export async function HomePageOverride() {
-  const [articles, updates, tools] = await Promise.all([
+  const [articles, sideUpdates, sideTools] = await Promise.all([
     fetchTaskPosts('article', 12),
-    fetchTaskPosts('comment', 6),
-    fetchTaskPosts('sbm', 6),
+    fetchTaskPosts('article', 3),
+    fetchTaskPosts('article', 3),
   ])
 
   const featured = articles.slice(0, 3)
   const latest = articles.slice(3, 9)
-  const sideUpdates = updates.slice(0, 3)
-  const sideTools = tools.slice(0, 3)
 
   return (
     <div className="techmix-shell min-h-screen text-[#10231a]">
@@ -50,9 +48,6 @@ export async function HomePageOverride() {
               <Link href="/articles" className="techmix-btn">
                 Read latest
                 <ArrowRight className="h-4 w-4" />
-              </Link>
-              <Link href="/blog" className="techmix-btn-soft">
-                Explore guides
               </Link>
             </div>
             <div className="mt-7 grid gap-3 sm:grid-cols-3">
@@ -99,7 +94,7 @@ export async function HomePageOverride() {
               <h3 className="text-2xl font-semibold tracking-[-0.04em] text-[#0f2237]">Community signals</h3>
               <div className="mt-4 grid gap-4">
                 {sideUpdates.map((post, index) => (
-                  <TaskPostCard key={post.id ?? `${post.slug}-${index}`} post={post} href={`/blog/${post.slug}`} taskKey="comment" compact />
+                  <TaskPostCard key={post.id ?? `${post.slug}-${index}`} post={post} href={`/articles/${post.slug}`} taskKey="article" compact />
                 ))}
               </div>
             </div>
@@ -107,7 +102,7 @@ export async function HomePageOverride() {
               <h3 className="text-2xl font-semibold tracking-[-0.04em] text-[#0f2237]">Tool picks</h3>
               <div className="mt-4 grid gap-4">
                 {sideTools.map((post, index) => (
-                  <TaskPostCard key={post.id ?? `${post.slug}-${index}`} post={post} href={`/sbm/${post.slug}`} taskKey="sbm" compact />
+                  <TaskPostCard key={post.id ?? `${post.slug}-${index}`} post={post} href={`/articles/${post.slug}`} taskKey="article" compact />
                 ))}
               </div>
             </div>

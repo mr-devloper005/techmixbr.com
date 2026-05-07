@@ -134,9 +134,8 @@ export const taskIntroCopy: Record<
       'Use this section to browse thoughtful posts, revisit useful writing, and move into supporting content when you want more context.',
     ],
     links: [
-      { label: 'Explore listings', href: '/listings' },
-      { label: 'Open image sharing', href: '/image-sharing' },
-      { label: 'Browse resources', href: '/pdf' },
+      { label: 'About', href: '/about' },
+      { label: 'Contact', href: '/contact'}
     ],
   },
   classified: {

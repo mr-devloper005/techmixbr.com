@@ -24,8 +24,8 @@ export default function ContactPage() {
     { icon: MapPin, title: 'Regional opportunities', body: 'Suggest local topics and business categories that deserve better coverage.' },
   ]
   const supportMeta = [
-    { label: 'Email support', value: 'support@techmixbr.com', icon: Mail },
-    { label: 'Editorial desk', value: 'editorial@techmixbr.com', icon: FileText },
+    { label: 'Email support', value: process.env.NEXT_PUBLIC_CONTACT_SUPPORT_EMAIL || 'support@techmixbr.com', icon: Mail },
+    { label: 'Editorial desk', value: process.env.NEXT_PUBLIC_CONTACT_EDITORIAL_EMAIL || 'editorial@techmixbr.com', icon: FileText },
     { label: 'Response window', value: 'Within 24 business hours', icon: Clock3 },
   ]
 
