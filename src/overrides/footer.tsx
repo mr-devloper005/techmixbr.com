@@ -22,8 +22,6 @@ export function FooterOverride() {
           <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[#7fd49a]">Main sections</p>
           <div className="mt-4 grid gap-3 text-sm font-semibold text-[#e8f1f6]">
             <Link href="/articles" className="inline-flex items-center gap-2 hover:text-[#7fd49a]"><BookOpen className="h-4 w-4" />Articles</Link>
-            <Link href="/blog" className="hover:text-[#7fd49a]">Guides</Link>
-            <Link href="/community" className="hover:text-[#7fd49a]">Community</Link>
             <Link href="/search" className="hover:text-[#7fd49a]">Search</Link>
           </div>
         </div>

@@ -54,14 +54,9 @@ export default function AboutPage() {
                 {`${SITE_CONFIG.name} publishes practical marketing and software insights designed for operators, founders, and growth teams.`}
               </p>
             </div>
-            <div className="flex flex-wrap gap-3">
-              <Button variant="ghost" className="techmix-btn-soft" asChild>
-                <Link href="/team">Meet the Team</Link>
-              </Button>
-              <Button className="techmix-btn" asChild>
-                <Link href="/contact">Contact Us</Link>
-              </Button>
-            </div>
+            <Button className="techmix-btn" asChild>
+              <Link href="/contact">Contact Us</Link>
+            </Button>
           </div>
         </section>
 
@@ -140,36 +135,6 @@ export default function AboutPage() {
               </Button>
             </CardContent>
           </Card>
-        </section>
-
-        <section className="mt-10">
-          <h2 className="text-2xl font-semibold text-[#10263c]">Core team</h2>
-          <p className="mt-2 text-sm text-[#3f5a4c]">
-            Editorial, product, and growth specialists shaping the platform experience.
-          </p>
-          <div className="mt-6 grid gap-6 md:grid-cols-3">
-            {mockTeamMembers.map((member) => (
-              <Card
-                key={member.id}
-                className="techmix-panel transition-transform hover:-translate-y-1"
-              >
-                <CardContent className="p-6">
-                  <div className="flex items-center gap-3">
-                    <Avatar className="h-12 w-12">
-                      <AvatarImage src={member.avatar} alt={member.name} />
-                      <AvatarFallback>{member.name.charAt(0)}</AvatarFallback>
-                    </Avatar>
-                    <div>
-                      <p className="text-sm font-semibold text-[#10263c]">{member.name}</p>
-                      <p className="text-xs text-[#3f5a4c]">{member.role}</p>
-                    </div>
-                  </div>
-                  <p className="mt-3 text-sm text-[#3f5a4c]">{member.bio}</p>
-                  <p className="mt-3 text-xs text-[#3f5a4c]">{member.location}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
         </section>
       </main>
       <Footer />
