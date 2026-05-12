@@ -1,86 +1,56 @@
-import { Clock3, FileText, Mail, MapPin, Phone, Sparkles } from 'lucide-react'
-import { NavbarShell } from '@/components/shared/navbar-shell'
-import { Footer } from '@/components/shared/footer'
-import { SITE_CONFIG } from '@/lib/site-config'
-import { CONTACT_PAGE_OVERRIDE_ENABLED, ContactPageOverride } from '@/overrides/contact-page'
+import { Mail, MessageSquareText, ShieldCheck } from 'lucide-react';
+
+import { ContactLeadForm } from '@/components/shared/contact-lead-form';
+import { Footer } from '@/components/shared/footer';
+import { NavbarShell } from '@/components/shared/navbar-shell';
+
+const siteName = process.env.NEXT_PUBLIC_SITE_NAME || 'Techmix BR';
+
+const contactHighlights = [
+  { icon: Mail, title: 'Direct response', copy: 'Your message is saved securely and routed to the right team.' },
+  { icon: MessageSquareText, title: 'Clear details', copy: 'Share your requirement, question, or collaboration idea in one place.' },
+  { icon: ShieldCheck, title: 'Reliable follow-up', copy: 'We keep the request record so every conversation stays traceable.' },
+];
 
 export default function ContactPage() {
-  if (CONTACT_PAGE_OVERRIDE_ENABLED) {
-    return <ContactPageOverride />
-  }
-
-  const tone = {
-    shell: 'techmix-shell text-[#10231a]',
-    panel: 'techmix-panel',
-    soft: 'border border-[rgba(27,74,53,0.12)] bg-white/85',
-    muted: 'text-[#3f5a4c]',
-    action: 'techmix-btn',
-  }
-  const lanes = [
-    { icon: FileText, title: 'Editorial submissions', body: 'Pitch technical explainers, growth breakdowns, and original case studies.' },
-    { icon: Mail, title: 'Partnership requests', body: 'Collaborate on sponsored content, newsletter placements, or ecosystem campaigns.' },
-    { icon: Sparkles, title: 'Contributor onboarding', body: 'Get support for publishing standards, author setup, and content workflows.' },
-    { icon: Phone, title: 'Business support', body: 'Need account or publishing help? We will route your request to the right team.' },
-    { icon: MapPin, title: 'Regional opportunities', body: 'Suggest local topics and business categories that deserve better coverage.' },
-  ]
-  const supportMeta = [
-    { label: 'Email support', value: process.env.NEXT_PUBLIC_CONTACT_SUPPORT_EMAIL || 'support@techmixbr.com', icon: Mail },
-    { label: 'Editorial desk', value: process.env.NEXT_PUBLIC_CONTACT_EDITORIAL_EMAIL || 'editorial@techmixbr.com', icon: FileText },
-    { label: 'Response window', value: 'Within 24 business hours', icon: Clock3 },
-  ]
-
   return (
-    <div className={`min-h-screen ${tone.shell}`}>
+    <div className="min-h-screen bg-[#f7f1e8] text-stone-950">
       <NavbarShell />
-      <main className="mx-auto w-full max-w-[1450px] px-4 py-14 sm:px-6 lg:px-8">
-        <section className={`${tone.panel} rounded-[2rem] p-6 sm:p-8`}>
-          <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
+      <main>
+        <section className="relative overflow-hidden px-6 py-20 md:px-10 lg:px-16">
+          <div className="absolute left-[-10%] top-10 h-72 w-72 rounded-full bg-amber-200/40 blur-3xl" />
+          <div className="absolute bottom-0 right-[-8%] h-80 w-80 rounded-full bg-stone-300/50 blur-3xl" />
+
+          <div className="relative mx-auto grid max-w-6xl gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.24em] opacity-70">Contact {SITE_CONFIG.name}</p>
-              <h1 className="mt-4 text-5xl font-semibold tracking-[-0.05em] text-[#10263c]">
-                Let us help you publish better and grow faster.
+              <p className="text-sm font-black uppercase tracking-[0.35em] text-stone-500">Contact</p>
+              <h1 className="mt-5 max-w-3xl text-5xl font-black leading-[0.95] tracking-[-0.06em] text-stone-950 md:text-7xl">
+                Let&apos;s talk about your next move.
               </h1>
-              <p className={`mt-5 max-w-2xl text-sm leading-8 ${tone.muted}`}>
-                Tell us what you are building, where you are stuck, or how you want to collaborate.
-                We route each request to editorial, partnerships, or support so you get a useful answer quickly.
+              <p className="mt-6 max-w-2xl text-lg leading-8 text-stone-700">
+                Use this form to reach {siteName}. Your request will be recorded and shared with the support team for follow-up.
               </p>
-              <div className="mt-8 grid gap-4 sm:grid-cols-2">
-                {supportMeta.map((item) => (
-                  <div key={item.label} className={`${tone.soft} rounded-[1.2rem] p-4`}>
-                    <item.icon className="h-4 w-4 text-[#2b7244]" />
-                    <p className="mt-2 text-xs uppercase tracking-[0.2em] text-[#2b7244]">{item.label}</p>
-                    <p className="mt-1 text-sm font-semibold text-[#10263c]">{item.value}</p>
-                  </div>
-                ))}
-              </div>
-              <div className="mt-8 space-y-4">
-                {lanes.map((lane) => (
-                  <div key={lane.title} className={`rounded-[1.2rem] p-5 ${tone.soft}`}>
-                    <lane.icon className="h-5 w-5 text-[#2b7244]" />
-                    <h2 className="mt-3 text-lg font-semibold text-[#10263c]">{lane.title}</h2>
-                    <p className={`mt-2 text-sm leading-7 ${tone.muted}`}>{lane.body}</p>
+
+              <div className="mt-8 grid gap-4">
+                {contactHighlights.map((item) => (
+                  <div key={item.title} className="flex gap-4 rounded-3xl border border-stone-200 bg-white/60 p-5 shadow-sm">
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-stone-950 text-white">
+                      <item.icon className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <h2 className="text-base font-black text-stone-950">{item.title}</h2>
+                      <p className="mt-1 text-sm leading-6 text-stone-600">{item.copy}</p>
+                    </div>
                   </div>
                 ))}
               </div>
             </div>
 
-            <div className="rounded-[1.6rem] border border-[rgba(27,74,53,0.12)] bg-white/90 p-7">
-              <h2 className="text-2xl font-semibold text-[#10263c]">Send a message</h2>
-              <p className="mt-2 text-sm text-[#3f5a4c]">
-                Share clear details and links so our team can respond with specific next steps.
-              </p>
-              <form className="mt-6 grid gap-4">
-                <input className="h-12 rounded-xl border border-[rgba(27,74,53,0.16)] bg-white px-4 text-sm" placeholder="Your name" />
-                <input className="h-12 rounded-xl border border-[rgba(27,74,53,0.16)] bg-white px-4 text-sm" placeholder="Email address" />
-                <input className="h-12 rounded-xl border border-[rgba(27,74,53,0.16)] bg-white px-4 text-sm" placeholder="Subject (e.g. Editorial pitch)" />
-                <textarea className="min-h-[180px] rounded-2xl border border-[rgba(27,74,53,0.16)] bg-white px-4 py-3 text-sm" placeholder="Briefly explain your request, timeline, and preferred response format." />
-                <button type="submit" className={`inline-flex h-12 items-center justify-center rounded-full px-6 text-sm font-semibold ${tone.action}`}>Send message</button>
-              </form>
-            </div>
+            <ContactLeadForm />
           </div>
         </section>
       </main>
       <Footer />
     </div>
-  )
+  );
 }
