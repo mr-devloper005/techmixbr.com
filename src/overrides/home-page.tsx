@@ -10,14 +10,13 @@ import { fetchTaskPosts } from '@/lib/task-data'
 export const HOME_PAGE_OVERRIDE_ENABLED = true
 
 export async function HomePageOverride() {
-  const [articles, sideUpdates, sideTools] = await Promise.all([
-    fetchTaskPosts('article', 12),
-    fetchTaskPosts('article', 3),
-    fetchTaskPosts('article', 3),
-  ])
+  const articles = await fetchTaskPosts('article', 18)
 
   const featured = articles.slice(0, 3)
-  const latest = articles.slice(3, 9)
+  const latest = articles.slice(3, 9).length ? articles.slice(3, 9) : articles.slice(0, 6)
+  const sideUpdates = articles.slice(9, 12).length ? articles.slice(9, 12) : articles.slice(0, 3)
+  const sideTools = articles.slice(12, 15).length ? articles.slice(12, 15) : articles.slice(3, 6).length ? articles.slice(3, 6) : articles.slice(0, 3)
+  const editorNotes = articles.slice(15, 18).length ? articles.slice(15, 18) : articles.slice(6, 9).length ? articles.slice(6, 9) : articles.slice(0, 3)
 
   return (
     <div className="techmix-shell min-h-screen text-[#10231a]">
@@ -34,15 +33,12 @@ export async function HomePageOverride() {
 
         <section className="grid gap-8 lg:grid-cols-[0.92fr_1.08fr] lg:items-center">
           <div className="techmix-panel rounded-[2rem] p-7 sm:p-9">
-            <div className="techmix-badge">
-              <Sparkles className="h-3.5 w-3.5" />
-              Article-first platform
-            </div>
+            
             <h1 className="mt-5 max-w-[13ch] text-5xl font-semibold tracking-[-0.06em] text-[#10263c] sm:text-6xl">
-              Smarter marketing and AI insights for real growth.
+              Better ideas, clearer decisions, and meaningful progress.
             </h1>
             <p className="mt-5 max-w-xl text-base leading-8 text-[#3f5a4c]">
-              Techmix BR brings practical software analysis, digital marketing strategy, and actionable business content into one cleaner publishing experience.
+              Techmix BR curates useful insights, fresh perspectives, and practical guidance to help readers stay informed and move forward with confidence.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
               <Link href="/articles" className="techmix-btn">
@@ -76,16 +72,29 @@ export async function HomePageOverride() {
           </div>
         </section>
 
-        <section className="mt-12 grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
-          <div className="techmix-panel rounded-[2rem] p-6 sm:p-7">
-            <div className="flex items-center justify-between gap-3">
-              <h2 className="text-3xl font-semibold tracking-[-0.05em] text-[#10263c]">Latest updates</h2>
-              <Link href="/articles" className="text-sm font-semibold text-[#2b7244]">View all</Link>
+        <section className="mt-12 grid gap-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
+          <div className="grid gap-6 self-start">
+            <div className="techmix-panel rounded-[2rem] p-6 sm:p-7">
+              <div className="flex items-center justify-between gap-3">
+                <h2 className="text-3xl font-semibold tracking-[-0.05em] text-[#10263c]">Latest updates</h2>
+                <Link href="/articles" className="text-sm font-semibold text-[#2b7244]">View all</Link>
+              </div>
+              <div className="mt-5 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+                {latest.map((post, index) => (
+                  <TaskPostCard key={post.id ?? `${post.slug}-${index}`} post={post} href={`/articles/${post.slug}`} taskKey="article" compact />
+                ))}
+              </div>
             </div>
-            <div className="mt-5 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-              {latest.map((post, index) => (
-                <TaskPostCard key={post.id ?? `${post.slug}-${index}`} post={post} href={`/articles/${post.slug}`} taskKey="article" compact />
-              ))}
+            <div className="techmix-panel rounded-[2rem] p-6 sm:p-7">
+              <div className="flex items-center justify-between gap-3">
+                <h3 className="text-2xl font-semibold tracking-[-0.04em] text-[#10263c]">Editor notes</h3>
+                <Link href="/articles" className="text-sm font-semibold text-[#2b7244]">More reads</Link>
+              </div>
+              <div className="mt-4 grid gap-4">
+                {editorNotes.map((post, index) => (
+                  <TaskPostCard key={post.id ?? `${post.slug}-editor-${index}`} post={post} href={`/articles/${post.slug}`} taskKey="article" compact />
+                ))}
+              </div>
             </div>
           </div>
 

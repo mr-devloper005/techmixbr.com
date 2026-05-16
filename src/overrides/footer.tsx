@@ -13,7 +13,7 @@ export function FooterOverride() {
             <img src="/favicon.png" alt={`${SITE_CONFIG.name} logo`} width={18} height={18} className="h-[18px] w-[18px] shrink-0 object-contain" />
             {SITE_CONFIG.name}
           </div>
-          <h2 className="mt-4 text-3xl font-semibold tracking-[-0.05em] text-white">Technology, marketing, and software content that stays actionable.</h2>
+          <h2 className="mt-4 text-3xl font-semibold tracking-[-0.05em] text-white"></h2>
           <p className="mt-4 max-w-lg text-sm leading-7 text-[#b9cad8]">
             Article-first publishing with clearer sections for analysis, guides, and community updates. Clean structure, strong readability, and practical insights.
           </p>

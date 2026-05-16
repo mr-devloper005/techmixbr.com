@@ -36,7 +36,7 @@ export function NavbarOverride() {
           </div>
           <div className="min-w-0">
             <p className="truncate text-sm font-semibold text-[#112418]">{SITE_CONFIG.name}</p>
-            <p className="truncate text-[11px] uppercase tracking-[0.22em] text-[#3d8f57]">Tech and growth journal</p>
+            <p className="truncate text-[11px] uppercase tracking-[0.22em] text-[#3d8f57]"></p>
           </div>
         </Link>
 

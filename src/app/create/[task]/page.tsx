@@ -72,7 +72,7 @@ const FORM_CONFIG: Record<TaskKey, { title: string; description: string; fields:
   },
   article: {
     title: "Create Article",
-    description: "Write a local-only article post.",
+    description: "Write an article post.",
     fields: [
       { key: "title", label: "Article title", type: "text", required: true },
       { key: "summary", label: "Short summary", type: "textarea", required: true },
@@ -291,7 +291,7 @@ export default function CreateTaskPage() {
         <div className="techmix-panel rounded-3xl p-8">
           <div className="flex flex-wrap gap-2">
             <Badge className="bg-[#0f2237] text-[#f3f7fb]">{taskConfig.label}</Badge>
-            <Badge variant="outline" className="border-[rgba(27,74,53,0.2)] text-[#2b7244]">Local-only</Badge>
+          
           </div>
 
           <div className="mt-6 grid gap-6">
@@ -381,7 +381,7 @@ export default function CreateTaskPage() {
           <div className="mt-8 flex flex-wrap gap-3">
             <Button onClick={handleSubmit} className="techmix-btn">
               <Save className="mr-2 h-4 w-4" />
-              Save locally
+              Save
             </Button>
             <Button variant="ghost" className="techmix-btn-soft" asChild>
               <Link href={taskConfig.route}>
