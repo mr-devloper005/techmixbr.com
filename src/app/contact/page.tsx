@@ -24,11 +24,7 @@ export default function ContactPage() {
     { icon: Phone, title: 'Business support', body: 'Need account or publishing help? We will route your request to the right team.' },
     { icon: MapPin, title: 'Regional opportunities', body: 'Suggest local topics and business categories that deserve better coverage.' },
   ]
-  const supportMeta = [
-    { label: 'Email support', value: process.env.NEXT_PUBLIC_CONTACT_SUPPORT_EMAIL || 'support@techmixbr.com', icon: Mail },
-    { label: 'Editorial desk', value: process.env.NEXT_PUBLIC_CONTACT_EDITORIAL_EMAIL || 'editorial@techmixbr.com', icon: FileText },
-    { label: 'Response window', value: 'Within 24 business hours', icon: Clock3 },
-  ]
+  
 
   return (
     <div className={`min-h-screen ${tone.shell}`}>
@@ -46,13 +42,7 @@ export default function ContactPage() {
                 We route each request to editorial, partnerships, or support so you get a useful answer quickly.
               </p>
               <div className="mt-8 grid gap-4 sm:grid-cols-2">
-                {supportMeta.map((item) => (
-                  <div key={item.label} className={`${tone.soft} rounded-[1.2rem] p-4`}>
-                    <item.icon className="h-4 w-4 text-[#2b7244]" />
-                    <p className="mt-2 text-xs uppercase tracking-[0.2em] text-[#2b7244]">{item.label}</p>
-                    <p className="mt-1 text-sm font-semibold text-[#10263c]">{item.value}</p>
-                  </div>
-                ))}
+               
               </div>
               <div className="mt-8 space-y-4">
                 {lanes.map((lane) => (
